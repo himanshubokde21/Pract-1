@@ -15,6 +15,13 @@
       "when": 1777215437299,
       "tag": "0001_quick_chronomancer",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1777569879819,
+      "tag": "0002_smart_bruce_banner",
+      "breakpoints": true
     }
   ]
 }

@@ -1,4 +1,5 @@
 import * as p from 'drizzle-orm/pg-core'
+import { access } from 'node:fs'
 
 const userTable = p.pgTable('User', {
     id: p.serial().primaryKey(),
@@ -6,10 +7,12 @@ const userTable = p.pgTable('User', {
     password: p.text().notNull(),
     fullName: p.text().notNull(),
     userName: p.text().unique().notNull(),
-    subscriptionStatus: p.text().notNull(),
+    subscriptionStatus: p.text().default('free'),
     createdAt: p.timestamp().notNull().defaultNow(),
     updatedAt: p.timestamp().notNull().$onUpdate(() => new Date()),
-    profileImg: p.text().notNull()
+    profileImg: p.text().notNull(),
+    accessToken: p.text(),
+    refreshToken: p.text()
 })
 
 const videoTable = p.pgTable('Video', {

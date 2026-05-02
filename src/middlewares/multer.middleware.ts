@@ -1,34 +1,25 @@
 import multer from 'multer'
 import { Request } from 'express';
-import ApiError from "../utils/ApiError.util";
+import fs from 'fs';
+import path from 'path';
 
-// const localFileFilter = (
-//   req: Request, 
-//   file: Express.Multer.File, 
-//   cb: multer.FileFilterCallback
-// ) => {
-//   if (file.mimetype.startsWith("image/")) {
-//     cb(null, true);
-//   } else {
-//     cb(new ApiError(400, "Only images are allowed"));
-//   }
-// };
+const tempDir = path.join(process.cwd(), 'public', 'temp');
+if (!fs.existsSync(tempDir)) {
+    fs.mkdirSync(tempDir, { recursive: true });
+}
 
 const localStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "../public/temp")
+    destination: function (req: Request, file, cb) {
+        cb(null, tempDir)
     },
-    filename: function (req, file, cb){
-        cb(null, Date.now() + "-" + file.originalname)
+    filename: function (req: Request, file, cb){
+        cb(null, file.originalname)
     }
 })
 
 const localUpload = multer({
-  storage: localStorage,
-  // fileFilter: localFileFilter,
+  storage: localStorage
 })
 
-export {
-    localUpload,
-}
+export default localUpload
 

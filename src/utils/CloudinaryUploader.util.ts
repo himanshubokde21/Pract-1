@@ -1,26 +1,35 @@
-import { v2 as cloudinary} from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 import ApiError from "./ApiError.util";
-import * as fs from 'fs'
+import * as fs from 'fs';
+import path from 'path';
 
 const uploadOnCloudinary = async (localFilePath: string) => {
+    if (!localFilePath) return null;
 
-    if (!localFilePath) {
-            throw new ApiError(400, "missing file path!")
-        }
+    const resolvedPath = path.resolve(localFilePath);
+    if (!fs.existsSync(resolvedPath)) {
+        throw new ApiError(400, `File not found: ${resolvedPath}`);
+    }
 
     try {
-        const res = await cloudinary.uploader.upload(localFilePath)
-    
+        const res = await cloudinary.uploader.upload(resolvedPath, {
+            resource_type: 'auto',
+        });
+
         if (!res) {
-            throw new ApiError(500, "Failed to Upload on Cloud!")
+            throw new ApiError(500, "Failed to Upload on Cloud!");
         }
-        
-        console.log("image uploaded successfully: " + res)
-        fs.unlinkSync(localFilePath)
+
+        console.log("image uploaded successfully: ", res.url);
+        try { fs.unlinkSync(resolvedPath); } catch {}
+
+        return res;
     }
     catch (error: any) {
-        fs.unlinkSync(localFilePath)
-        throw new ApiError(400, error?.message || "something wnet wrong")
+        if (fs.existsSync(resolvedPath)) {
+            try { fs.unlinkSync(resolvedPath); } catch {}
+        }
+        throw new ApiError(400, error?.message || "Something went wrong");
     }
 }
 
