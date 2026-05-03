@@ -7,7 +7,6 @@ import { db } from "../db.ts"
 import { or, eq } from "drizzle-orm";
 import { HashPassword } from "../utils/HashPassword.util.ts";
 import { generateAccessToken, generateRefreshToken } from "../utils/generateAccessAndRefreshToken.util.ts";
-import { access } from "node:fs";
 import uploadOnCloudinary from "../utils/CloudinaryUploader.util.ts";
 import { UploadApiResponse } from "cloudinary";
 
@@ -19,14 +18,20 @@ const registerUser = Asynchandler(async (req: Request, res: Response) => {
             throw new ApiError(400, "All fields are required!")
         }
 
-        const existUser = await db.select()
-        .from(userTable)
-        .where(
-            or (
-                eq(userTable.userName, userName),
-                eq(userTable.email, email)
+        let existUser: any[] = []
+        try {
+            existUser = await db.select()
+            .from(userTable)
+            .where(
+                or (
+                    eq(userTable.userName, userName),
+                    eq(userTable.email, email)
+                )
             )
-        )
+        } catch (err: any) {
+            console.error("DB select failed", { message: err?.message, code: err?.code })
+            throw err
+        }
 
         if (existUser.length > 0){
             throw new ApiError(409, "user already exist!")
@@ -72,8 +77,6 @@ const registerUser = Asynchandler(async (req: Request, res: Response) => {
         if(!updateUser) {
             throw new ApiError(400, "something went wrong!")
         }
-
-        const newUser = await db.select({})
 
         return res
         .status(200)

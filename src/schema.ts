@@ -1,5 +1,4 @@
 import * as p from 'drizzle-orm/pg-core'
-import { access } from 'node:fs'
 
 const userTable = p.pgTable('User', {
     id: p.serial().primaryKey(),
