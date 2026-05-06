@@ -1,35 +1,25 @@
 import { v2 as cloudinary } from "cloudinary";
-import ApiError from "./ApiError.util";
 import * as fs from 'fs';
-import path from 'path';
+
+cloudinary.config({ 
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_SECRET_KEY
+});
 
 const uploadOnCloudinary = async (localFilePath: string) => {
-    if (!localFilePath) return null;
-
-    const resolvedPath = path.resolve(localFilePath);
-    if (!fs.existsSync(resolvedPath)) {
-        throw new ApiError(400, `File not found: ${resolvedPath}`);
-    }
-
     try {
-        const res = await cloudinary.uploader.upload(resolvedPath, {
-            resource_type: 'auto',
-        });
+        if (!localFilePath) return null
+        const response = await cloudinary.uploader.upload(localFilePath, {
+            resource_type: "auto"
+        })
+        console.log("file is uploaded on cloudinary ", response.url);
+        fs.unlinkSync(localFilePath)
+        return response;
 
-        if (!res) {
-            throw new ApiError(500, "Failed to Upload on Cloud!");
-        }
-
-        console.log("image uploaded successfully: ", res.url);
-        try { fs.unlinkSync(resolvedPath); } catch {}
-
-        return res;
-    }
-    catch (error: any) {
-        if (fs.existsSync(resolvedPath)) {
-            try { fs.unlinkSync(resolvedPath); } catch {}
-        }
-        throw new ApiError(400, error?.message || "Something went wrong");
+    } catch (error) {
+        fs.unlinkSync(localFilePath) 
+        return null;
     }
 }
 

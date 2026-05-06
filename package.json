@@ -8,7 +8,10 @@
   "main": "index.js",
   "scripts": {
     "test": "node -e \"console.log('No tests yet')\"",
-    "start": "nodemon --exec tsx ./src/index.ts"
+    "start": "nodemon --exec tsx ./src/index.ts",
+    "db:gen": "npx drizzle-kit generate",
+    "db:migrate": "npx drizzle-kit migrate",
+    "db:push": "npx drizzle-kit push"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

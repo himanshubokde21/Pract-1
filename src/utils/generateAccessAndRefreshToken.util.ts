@@ -1,13 +1,13 @@
 import jwt, { Secret, SignOptions } from 'jsonwebtoken'
-import { db } from '../db'
-import { userTable } from '../schema'
-import { eq } from 'drizzle-orm'
+import db from '../db.ts'
+import { userTable } from '../schema.ts'
+import { eq} from 'drizzle-orm'
 import ApiError from './ApiError.util'
 
 
 
 
-export const generateAccessToken = async (userId: number) => {
+export const generateAccessToken = async (userId: string) => {
     const [user] = await db.select({
         id: userTable.id,
         userName: userTable.userName, 
@@ -35,10 +35,7 @@ export const generateAccessToken = async (userId: number) => {
     );
 };
 
-
-
-
-export const generateRefreshToken = async (userId: number) => {
+export const generateRefreshToken = async (userId: string) => {
     const [user] = await db.select({
         id: userTable.id
     })
@@ -52,6 +49,6 @@ export const generateRefreshToken = async (userId: number) => {
     return jwt.sign(
         { id: user.id },
         process.env.JWT_SECRET as Secret,
-        { expiresIn: process.env.REFRESH_TOKEN_EXPIRY as SignOptions['expiresIn']}
+        { expiresIn: process.env.REFRESH_TOKEN_EXPIRY as SignOptions['expiresIn'] }
     )
 }

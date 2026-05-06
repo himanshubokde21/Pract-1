@@ -1,14 +1,13 @@
 import Asynchandler from "../utils/AsyncHandler.util.ts"
-import { userTable } from "../schema";
+import { userTable } from "../schema.ts";
 import { Request, Response } from "express";
 import ApiError from "../utils/ApiError.util.ts";
 import ApiResponse from "../utils/ApiResponse.util.ts"
-import { db } from "../db.ts"
+import db from "../db.ts"
 import { or, eq } from "drizzle-orm";
 import { HashPassword } from "../utils/HashPassword.util.ts";
 import { generateAccessToken, generateRefreshToken } from "../utils/generateAccessAndRefreshToken.util.ts";
 import uploadOnCloudinary from "../utils/CloudinaryUploader.util.ts";
-import { UploadApiResponse } from "cloudinary";
 
 
 const registerUser = Asynchandler(async (req: Request, res: Response) => {
@@ -19,19 +18,15 @@ const registerUser = Asynchandler(async (req: Request, res: Response) => {
         }
 
         let existUser: any[] = []
-        try {
-            existUser = await db.select()
-            .from(userTable)
-            .where(
-                or (
-                    eq(userTable.userName, userName),
-                    eq(userTable.email, email)
-                )
+        
+        existUser = await db.select({ id: userTable.id })
+        .from(userTable)
+        .where(
+            or (
+                eq(userTable.userName, userName),
+                eq(userTable.email, email)
             )
-        } catch (err: any) {
-            console.error("DB select failed", { message: err?.message, code: err?.code })
-            throw err
-        }
+        )
 
         if (existUser.length > 0){
             throw new ApiError(409, "user already exist!")
@@ -51,11 +46,11 @@ const registerUser = Asynchandler(async (req: Request, res: Response) => {
         console.log("Hased Passwrod: " + hashedPassword)
 
         const [user] = await db.insert(userTable).values({
-            userName: userName,
-            email: email,
-            profileImg: profileImgUrl.url,
-            password: hashedPassword,
-            fullName: fullName,
+            userName: userName as string,
+            email: email as string,
+            profileImg: profileImgUrl.url as string,
+            password: hashedPassword as string,
+            fullName: fullName as string,
         }).returning();
 
         if (!user) {

@@ -1,12 +1,17 @@
-import './env.ts'
-import { drizzle } from 'drizzle-orm/node-postgres'
+import 'dotenv/config'
+import { drizzle, NodePgDatabase } from 'drizzle-orm/node-postgres'
 import { Pool } from 'pg'
+import * as schema from "./schema.ts"
 
-const connectionString = process.env.DATABASE_URL
-if (!connectionString) {
-	throw new Error('DATABASE_URL is missing')
+
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+});
+
+const db: NodePgDatabase<typeof schema> = drizzle(pool, { schema });
+if (!db) {
+    console.log("db not connected!")
 }
+console.log('DB is Connection!');
 
-const pool = new Pool({ connectionString })
-
-export const db = drizzle(pool)
+export default db

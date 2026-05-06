@@ -1,27 +1,27 @@
-import * as p from 'drizzle-orm/pg-core'
+import { pgTable, uuid, varchar, integer, timestamp, serial } from 'drizzle-orm/pg-core'
 
-const userTable = p.pgTable('User', {
-    id: p.serial().primaryKey(),
-    email: p.text().notNull().unique(),
-    password: p.text().notNull(),
-    fullName: p.text().notNull(),
-    userName: p.text().unique().notNull(),
-    subscriptionStatus: p.text().default('free'),
-    createdAt: p.timestamp().notNull().defaultNow(),
-    updatedAt: p.timestamp().notNull().$onUpdate(() => new Date()),
-    profileImg: p.text().notNull(),
-    accessToken: p.text(),
-    refreshToken: p.text()
+const userTable = pgTable('User', {
+    id: uuid("id").primaryKey().defaultRandom(),
+    email: varchar("email").notNull().unique(),
+    password: varchar("password").notNull(),
+    fullName: varchar("fullName").notNull(),
+    userName: varchar("userName").unique().notNull(),
+    subscriptionStatus: varchar("subscriptionStatus").default('free'),
+    createdAt: timestamp("createdAt").notNull().defaultNow(),
+    updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+    profileImg: varchar("profileImg").notNull(),
+    accessToken: varchar("accessToken"),
+    refreshToken: varchar("refreshToken")
 })
 
-const videoTable = p.pgTable('Video', {
-    id: p.serial().primaryKey(),
-    title: p.text().notNull().unique(),
-    description: p.text(),
-    videoFile: p.text().notNull(), 
-    thumbnail: p.text().notNull(),
-    viewCount: p.integer().notNull().default( 0 ),
-    duration: p.integer().notNull()
+const videoTable = pgTable('Video', {
+    id: serial("id").primaryKey(),
+    title: varchar("title").notNull().unique(),
+    description: varchar("description"),
+    videoFile: varchar("videoFile").notNull(), 
+    thumbnail: varchar("thumbnail").notNull(),
+    viewCount: integer("viewCount").notNull().default( 0 ),
+    duration: integer("duration").notNull()
 })
 
 export {

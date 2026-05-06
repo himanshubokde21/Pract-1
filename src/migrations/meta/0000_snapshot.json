@@ -1,5 +1,5 @@
 {
-  "id": "d0451ce2-a7ae-4ad4-bf66-33379e065dc8",
+  "id": "2cb3e4d5-4178-4b56-9e06-e5d4e4906dcf",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -10,33 +10,40 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
           "notNull": true
         },
         "email": {
           "name": "email",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
         "password": {
           "name": "password",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
         "fullName": {
           "name": "fullName",
-          "type": "text",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "userName": {
+          "name": "userName",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
         "subscriptionStatus": {
           "name": "subscriptionStatus",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false,
+          "default": "'free'"
         },
         "createdAt": {
           "name": "createdAt",
@@ -50,6 +57,24 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true
+        },
+        "profileImg": {
+          "name": "profileImg",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "accessToken": {
+          "name": "accessToken",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "refreshToken": {
+          "name": "refreshToken",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -61,6 +86,13 @@
           "nullsNotDistinct": false,
           "columns": [
             "email"
+          ]
+        },
+        "User_userName_unique": {
+          "name": "User_userName_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "userName"
           ]
         }
       },
@@ -80,25 +112,25 @@
         },
         "title": {
           "name": "title",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
         "description": {
           "name": "description",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
         "videoFile": {
           "name": "videoFile",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
         "thumbnail": {
           "name": "thumbnail",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },

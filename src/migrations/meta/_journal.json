@@ -5,22 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1776954729332,
-      "tag": "0000_mute_jack_murdock",
+      "when": 1777991805928,
+      "tag": "0000_natural_krista_starr",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1777215437299,
-      "tag": "0001_quick_chronomancer",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1777569879819,
-      "tag": "0002_smart_bruce_banner",
+      "when": 1777996490923,
+      "tag": "0001_superb_chameleon",
       "breakpoints": true
     }
   ]

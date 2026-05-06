@@ -1,6 +1,6 @@
 {
-  "id": "a2b48fc0-fe4a-4b16-9874-e412eb5e1e58",
-  "prevId": "d0451ce2-a7ae-4ad4-bf66-33379e065dc8",
+  "id": "e141400b-0f05-41a1-8bad-c9d899bad0a0",
+  "prevId": "2cb3e4d5-4178-4b56-9e06-e5d4e4906dcf",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -10,39 +10,41 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "email": {
           "name": "email",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
         "password": {
           "name": "password",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
         "fullName": {
           "name": "fullName",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
         "userName": {
           "name": "userName",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
         "subscriptionStatus": {
           "name": "subscriptionStatus",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false,
+          "default": "'free'"
         },
         "createdAt": {
           "name": "createdAt",
@@ -55,13 +57,26 @@
           "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
         },
         "profileImg": {
           "name": "profileImg",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
+        },
+        "accessToken": {
+          "name": "accessToken",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "refreshToken": {
+          "name": "refreshToken",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -99,25 +114,25 @@
         },
         "title": {
           "name": "title",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
         "description": {
           "name": "description",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
         "videoFile": {
           "name": "videoFile",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
         "thumbnail": {
           "name": "thumbnail",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
