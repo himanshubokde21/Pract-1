@@ -11,7 +11,8 @@
     "start": "nodemon --exec tsx ./src/index.ts",
     "db:gen": "npx drizzle-kit generate",
     "db:migrate": "npx drizzle-kit migrate",
-    "db:push": "npx drizzle-kit push"
+    "db:push": "npx drizzle-kit push",
+    "db:studio": "npx @drizzlle-kit studio"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

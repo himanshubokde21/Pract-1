@@ -5,13 +5,13 @@ import path from 'path';
 
 
 const localStorage = multer.diskStorage({
-    destination: function (req: Request, file, cb) {
+    destination: function (req: Request, files, cb) {
         cb(null, path.join(
             process.cwd(), "public", "temp"
         ));
     },
-    filename: function (req: Request, file, cb){
-        cb(null, file.originalname)
+    filename: function (req: Request, files, cb){
+        cb(null, files.originalname)
     }
 })
 

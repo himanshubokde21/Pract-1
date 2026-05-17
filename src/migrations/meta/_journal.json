@@ -15,6 +15,34 @@
       "when": 1777996490923,
       "tag": "0001_superb_chameleon",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1778323156239,
+      "tag": "0002_loving_living_lightning",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1778350304545,
+      "tag": "0003_colorful_zodiak",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1778352724833,
+      "tag": "0004_careless_sersi",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1778480805338,
+      "tag": "0005_overrated_smiling_tiger",
+      "breakpoints": true
     }
   ]
 }
