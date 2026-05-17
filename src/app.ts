@@ -15,8 +15,16 @@ app.get('/', (_req: any, res: any) => {
     res.status(200).json({ message: 'Server is running' })
 })
 
-import UserRouter from './routers/user.router.ts'
+import userRouter from './routers/user.router.ts'
+import videoRouter from './routers/video.router.ts'
+import likeRouter from './routers/like.router.ts'
+import commentRouter from './routers/comment.router.ts'
+import subscriptionRouter from './routers/subscription.router.ts'
 
-app.use('/api/v1/users', UserRouter)
+app.use('/api/v1/users', userRouter)
+app.use('/api/v1/videos',videoRouter)
+app.use('/api/v1/like', likeRouter)
+app.use('/api/v1/comment', commentRouter)
+app.use('/api/v1/subscription', subscriptionRouter)
 
 export default app
